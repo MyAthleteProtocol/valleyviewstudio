@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValleyView Studio — Websites for Australian Businesses</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --soil: #1a1410;
+  --bark: #2c2218;
+  --tan: #c4a882;
+  --cream: #f5f0e8;
+  --warm: #faf7f2;
+  --sage: #7a9e7e;
+  --rust: #c4714a;
+  --muted: #8a7a6a;
+  --border: rgba(196,168,130,0.15);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--warm); color: var(--soil); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 52px;
+  background: rgba(250,247,242,0.96); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; color: var(--soil); }
+.logo span { color: var(--sage); }
+.nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+.nav-links a:hover { color: var(--soil); }
+.nav-cta { background: var(--soil); color: var(--cream) !important; padding: 10px 22px; font-weight: 500 !important; border-radius: 3px; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 100px 52px 60px;
+  gap: 60px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, #faf7f2 0%, #f0ede6 100%);
+  z-index: 0;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--sage); margin-bottom: 28px; width: fit-content; animation: up 0.8s ease both; }
+.hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--sage); }
+
+.hero h1 { font-family: 'Fraunces', serif; font-weight: 700; font-size: clamp(38px, 4.5vw, 62px); line-height: 1.08; letter-spacing: -1.5px; color: var(--soil); animation: up 0.8s 0.1s ease both; }
+.hero h1 em { font-style: italic; font-weight: 300; color: var(--rust); }
+.hero-sub { margin-top: 20px; font-size: 15px; color: var(--muted); max-width: 420px; line-height: 1.8; animation: up 0.8s 0.2s ease both; }
+
+.hero-actions { display: flex; gap: 14px; margin-top: 36px; animation: up 0.8s 0.3s ease both; }
+.btn { display: inline-block; text-decoration: none; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 14px 28px; border-radius: 3px; transition: all 0.2s; }
+.btn-dark { background: var(--soil); color: var(--cream); }
+.btn-dark:hover { background: var(--bark); }
+.btn-outline { background: transparent; color: var(--soil); border: 1px solid rgba(26,20,16,0.2); }
+.btn-outline:hover { border-color: var(--soil); }
+
+.hero-proof { display: flex; gap: 28px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); animation: up 0.8s 0.4s ease both; flex-wrap: wrap; }
+.proof-item .num { font-family: 'Fraunces', serif; font-weight: 600; font-size: 26px; color: var(--rust); line-height: 1; }
+.proof-item .label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+/* HERO VISUAL */
+.hero-visual { position: relative; z-index: 1; animation: up 0.8s 0.2s ease both; }
+
+.browser-wrap {
+  position: relative;
+  filter: drop-shadow(0 32px 64px rgba(26,20,16,0.18));
+}
+
+.browser {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.browser-bar {
+  background: #f5f5f5;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.browser-dots { display: flex; gap: 6px; }
+.bd { width: 10px; height: 10px; border-radius: 50%; }
+.bd-r { background: #ff5f57; }
+.bd-y { background: #febc2e; }
+.bd-g { background: #28c840; }
+
+.browser-url {
+  flex: 1;
+  background: #ebebeb;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 11px;
+  color: #888;
+  font-family: monospace;
+}
+
+/* MOCK WEBSITE INSIDE BROWSER */
+.mock-site { background: #fff; }
+
+.mock-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid #f0ede6;
+}
+.mock-logo-block { display: flex; flex-direction: column; gap: 3px; }
+.mock-logo-text { width: 72px; height: 9px; background: #2c2218; border-radius: 2px; }
+.mock-logo-sub { width: 44px; height: 5px; background: #c4714a; border-radius: 1px; opacity: 0.6; }
+.mock-nav-links { display: flex; gap: 10px; }
+.mock-nav-link { width: 32px; height: 6px; background: #d4c8b8; border-radius: 1px; }
+.mock-nav-btn { width: 52px; height: 22px; background: #1a1410; border-radius: 3px; }
+
+.mock-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 180px;
+}
+
+.mock-hero-left {
+  background: linear-gradient(135deg, #2c1f14 0%, #5a6b4e 100%);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.mock-tag { display: flex; align-items: center; gap: 5px; margin-bottom: 4px; }
+.mock-tag-line { width: 14px; height: 1px; background: rgba(122,158,126,0.8); }
+.mock-tag-txt { width: 48px; height: 5px; background: rgba(122,158,126,0.6); border-radius: 1px; }
+
+.mock-h1a { width: 85%; height: 13px; background: rgba(245,240,232,0.9); border-radius: 2px; }
+.mock-h1b { width: 70%; height: 13px; background: rgba(245,240,232,0.7); border-radius: 2px; }
+.mock-h1c { width: 55%; height: 13px; background: rgba(196,113,74,0.7); border-radius: 2px; }
+.mock-p1 { width: 80%; height: 5px; background: rgba(245,240,232,0.25); border-radius: 1px; margin-top: 4px; }
+.mock-p2 { width: 65%; height: 5px; background: rgba(245,240,232,0.18); border-radius: 1px; }
+.mock-btns { display: flex; gap: 6px; margin-top: 6px; }
+.mock-btn1 { width: 54px; height: 18px; background: rgba(245,240,232,0.85); border-radius: 2px; }
+.mock-btn2 { width: 48px; height: 18px; border: 1px solid rgba(245,240,232,0.25); border-radius: 2px; }
+
+.mock-hero-right {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.mock-hero-img {
+  background: linear-gradient(160deg, #7a9e7e 0%, #5a8060 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+.mock-hours {
+  background: #f5f0e8;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+}
+.mock-hours-title { width: 50px; height: 7px; background: #2c1f14; border-radius: 1px; margin-bottom: 3px; opacity: 0.5; }
+.mock-hour-row { display: flex; justify-content: space-between; }
+.mock-hour-d { width: 42px; height: 4px; background: #8a7a6a; border-radius: 1px; opacity: 0.4; }
+.mock-hour-t { width: 34px; height: 4px; background: #2c1f14; border-radius: 1px; opacity: 0.4; }
+
+.mock-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: #f0ede6;
+  border-top: 1px solid #f0ede6;
+}
+.mock-feature {
+  background: #fff;
+  padding: 14px 12px;
+}
+.mock-feat-icon { width: 18px; height: 18px; background: #f0ede6; border-radius: 50%; margin-bottom: 7px; }
+.mock-feat-title { width: 55%; height: 6px; background: #2c2218; border-radius: 1px; margin-bottom: 5px; opacity: 0.7; }
+.mock-feat-p1 { width: 90%; height: 4px; background: #d4c8b8; border-radius: 1px; margin-bottom: 3px; }
+.mock-feat-p2 { width: 70%; height: 4px; background: #d4c8b8; border-radius: 1px; }
+
+/* floating badges */
+.float-badge {
+  position: absolute;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(26,20,16,0.14);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.badge-1 {
+  bottom: -16px;
+  left: -24px;
+  animation: float1 4s ease-in-out infinite;
+}
+
+.badge-2 {
+  top: 40px;
+  right: -28px;
+  animation: float2 4s 1s ease-in-out infinite;
+}
+
+.badge-icon { font-size: 18px; }
+.badge-text { display: flex; flex-direction: column; }
+.badge-num { font-family: 'Fraunces', serif; font-weight: 600; font-size: 15px; color: var(--soil); line-height: 1; }
+.badge-label { font-size: 10px; color: var(--muted); letter-spacing: 0.5px; margin-top: 1px; }
+
+@keyframes float1 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@keyframes up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--sage); margin-bottom: 10px; }
+.section-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(28px, 3.5vw, 42px); letter-spacing: -0.5px; line-height: 1.1; margin-bottom: 52px; color: var(--soil); }
+.section-title em { font-style: italic; font-weight: 300; color: var(--rust); }
+
+.what { padding: 100px 52px; background: var(--cream); }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.feature { background: var(--warm); padding: 36px 32px; border-bottom: 3px solid transparent; transition: border-color 0.2s; }
+.feature:hover { border-color: var(--sage); }
+.feature-icon { font-size: 24px; margin-bottom: 16px; }
+.feature h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 18px; margin-bottom: 10px; color: var(--soil); }
+.feature p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+.portfolio { padding: 100px 52px; }
+.portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 52px; }
+.portfolio-card { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: #fff; transition: transform 0.25s, box-shadow 0.25s; }
+.portfolio-card:hover { transform: translateY(-6px); box-shadow: 0 24px 56px rgba(26,20,16,0.12); }
+.screenshot-slider { position: relative; height: 220px; overflow: hidden; }
+.screenshot-slider img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: opacity 0.5s ease; }
+.screenshot-slider img.slide-2 { opacity: 0; }
+.portfolio-card:hover .screenshot-slider img.slide-1 { opacity: 0; }
+.portfolio-card:hover .screenshot-slider img.slide-2 { opacity: 1; }
+.portfolio-info { padding: 22px 24px; }
+.portfolio-tag { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--sage); margin-bottom: 6px; }
+.portfolio-info h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 18px; color: var(--soil); margin-bottom: 6px; }
+.portfolio-info p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.portfolio-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.ptag { font-size: 10px; padding: 3px 10px; background: var(--cream); border-radius: 100px; color: var(--muted); border: 1px solid var(--border); }
+
+.pricing { padding: 100px 52px; background: var(--cream); }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 52px; }
+.price-card { background: var(--warm); border: 1px solid var(--border); border-radius: 6px; padding: 36px 32px; position: relative; transition: border-color 0.2s; }
+.price-card:hover { border-color: rgba(122,158,126,0.4); }
+.price-card.featured { background: var(--soil); border-color: var(--soil); }
+.price-card.featured .price-name, .price-card.featured .price-amount { color: var(--cream) !important; }
+.price-card.featured .price-desc, .price-card.featured .price-note { color: rgba(245,240,232,0.5) !important; }
+.price-card.featured .price-features li { color: rgba(245,240,232,0.8) !important; }
+.price-card.featured .price-features li::before { color: var(--sage) !important; }
+.featured-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--sage); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 4px 14px; border-radius: 100px; white-space: nowrap; }
+.price-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px; color: var(--soil); margin-bottom: 6px; }
+.price-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+.price-amount { font-family: 'Fraunces', serif; font-weight: 600; font-size: 44px; color: var(--soil); letter-spacing: -1px; line-height: 1; }
+.price-amount span { font-size: 18px; font-weight: 300; color: var(--muted); letter-spacing: 0; }
+.price-note { font-size: 11px; color: var(--muted); margin-bottom: 24px; margin-top: 4px; }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.price-features li { font-size: 13px; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; }
+.price-features li::before { content: '✓'; color: var(--sage); font-weight: 700; flex-shrink: 0; }
+
+.process { padding: 100px 52px; }
+.process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 52px; }
+.process-step { background: var(--cream); padding: 32px 28px; }
+.step-num { font-family: 'Fraunces', serif; font-weight: 300; font-size: 44px; color: rgba(122,158,126,0.3); line-height: 1; margin-bottom: 16px; }
+.process-step h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17px; color: var(--soil); margin-bottom: 10px; }
+.process-step p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+.contact { padding: 100px 52px; background: var(--soil); }
+.contact .section-eyebrow { color: var(--sage); }
+.contact .section-title { color: var(--cream); }
+.contact .section-title em { color: var(--tan); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 52px; }
+.contact-info h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; color: var(--cream); margin-bottom: 14px; }
+.contact-info p { font-size: 14px; color: rgba(245,240,232,0.5); line-height: 1.8; margin-bottom: 28px; }
+.contact-detail { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid rgba(196,168,130,0.1); }
+.contact-detail:last-child { border-bottom: none; }
+.detail-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--sage); margin-bottom: 3px; }
+.detail-val { font-size: 14px; color: rgba(245,240,232,0.7); }
+.contact-form { display: flex; flex-direction: column; gap: 14px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.fgroup { display: flex; flex-direction: column; gap: 6px; }
+.fgroup label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+.fgroup input, .fgroup select, .fgroup textarea { background: rgba(255,255,255,0.05); border: 1px solid rgba(196,168,130,0.15); color: var(--cream); padding: 13px 16px; font-family: 'DM Sans', sans-serif; font-size: 14px; border-radius: 3px; outline: none; transition: border-color 0.2s; width: 100%; }
+.fgroup input:focus, .fgroup select:focus, .fgroup textarea:focus { border-color: var(--sage); }
+.fgroup textarea { resize: vertical; min-height: 100px; }
+.fgroup select option { background: var(--soil); }
+
+footer { background: var(--bark); border-top: 1px solid rgba(196,168,130,0.08); padding: 36px 52px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 18px; color: var(--cream); }
+.footer-logo span { color: var(--sage); }
+footer p { font-size: 12px; color: rgba(245,240,232,0.3); }
+
+@media (max-width: 900px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 100px 20px 60px; }
+  .hero-visual { display: none; }
+  .what, .portfolio, .pricing, .process, .contact { padding: 60px 20px; }
+  .features-grid, .portfolio-grid, .pricing-grid, .process-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { padding: 28px 20px; flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">ValleyView <span>Studio</span></div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#process">How It Works</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Australian Web Studio</div>
+    <h1>Your business,<br>online and<br><em>looking the part.</em></h1>
+    <p class="hero-sub">We build clean, professional websites for Australian businesses. Fast turnaround, honest pricing, no tech headaches.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-dark">Get a Free Quote →</a>
+      <a href="#work" class="btn btn-outline">See Our Work</a>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-item"><div class="num">5 days</div><div class="label">Average delivery</div></div>
+      <div class="proof-item"><div class="num">$599</div><div class="label">Starting price</div></div>
+      <div class="proof-item"><div class="num">100%</div><div class="label">You own everything</div></div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="browser-wrap">
+      <!-- Floating badges -->
+      <div class="float-badge badge-1">
+        <div class="badge-icon">⚡</div>
+        <div class="badge-text">
+          <div class="badge-num">5 days</div>
+          <div class="badge-label">Delivered</div>
+        </div>
+      </div>
+      <div class="float-badge badge-2">
+        <div class="badge-icon">★</div>
+        <div class="badge-text">
+          <div class="badge-num">5.0</div>
+          <div class="badge-label">Client rating</div>
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser-bar">
+          <div class="browser-dots">
+            <div class="bd bd-r"></div>
+            <div class="bd bd-y"></div>
+            <div class="bd bd-g"></div>
+          </div>
+          <div class="browser-url">valleyviewstudio.com.au/your-business</div>
+        </div>
+        <div class="mock-site">
+          <!-- Mock nav -->
+          <div class="mock-nav">
+            <div class="mock-logo-block">
+              <div class="mock-logo-text"></div>
+              <div class="mock-logo-sub"></div>
+            </div>
+            <div class="mock-nav-links">
+              <div class="mock-nav-link"></div>
+              <div class="mock-nav-link"></div>
+              <div class="mock-nav-link"></div>
+              <div class="mock-nav-btn"></div>
+            </div>
+          </div>
+          <!-- Mock hero -->
+          <div class="mock-hero">
+            <div class="mock-hero-left">
+              <div class="mock-tag"><div class="mock-tag-line"></div><div class="mock-tag-txt"></div></div>
+              <div class="mock-h1a"></div>
+              <div class="mock-h1b"></div>
+              <div class="mock-h1c"></div>
+              <div class="mock-p1"></div>
+              <div class="mock-p2"></div>
+              <div class="mock-btns">
+                <div class="mock-btn1"></div>
+                <div class="mock-btn2"></div>
+              </div>
+            </div>
+            <div class="mock-hero-right">
+              <div class="mock-hero-img">🌿</div>
+              <div class="mock-hours">
+                <div class="mock-hours-title"></div>
+                <div class="mock-hour-row"><div class="mock-hour-d"></div><div class="mock-hour-t"></div></div>
+                <div class="mock-hour-row"><div class="mock-hour-d"></div><div class="mock-hour-t"></div></div>
+                <div class="mock-hour-row"><div class="mock-hour-d"></div><div class="mock-hour-t"></div></div>
+              </div>
+            </div>
+          </div>
+          <!-- Mock features -->
+          <div class="mock-features">
+            <div class="mock-feature"><div class="mock-feat-icon"></div><div class="mock-feat-title"></div><div class="mock-feat-p1"></div><div class="mock-feat-p2"></div></div>
+            <div class="mock-feature"><div class="mock-feat-icon"></div><div class="mock-feat-title"></div><div class="mock-feat-p1"></div><div class="mock-feat-p2"></div></div>
+            <div class="mock-feature"><div class="mock-feat-icon"></div><div class="mock-feat-title"></div><div class="mock-feat-p1"></div><div class="mock-feat-p2"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="what" id="services">
+  <div class="section-eyebrow">What's Included</div>
+  <div class="section-title">Everything you need.<br><em>Nothing you don't.</em></div>
+  <div class="features-grid">
+    <div class="feature"><div class="feature-icon">📱</div><h3>Mobile Ready</h3><p>Looks perfect on every device — phone, tablet, desktop. No extra charge.</p></div>
+    <div class="feature"><div class="feature-icon">⚡</div><h3>Fast Loading</h3><p>Optimised for speed from day one. Slow websites lose customers — yours won't.</p></div>
+    <div class="feature"><div class="feature-icon">🔍</div><h3>SEO Ready</h3><p>Built with Google in mind. Page titles, structure and local SEO set up correctly.</p></div>
+    <div class="feature"><div class="feature-icon">📍</div><h3>Google Maps & Forms</h3><p>Contact forms, Google Maps and click-to-call — all connected and working.</p></div>
+    <div class="feature"><div class="feature-icon">🔒</div><h3>Secure & Reliable</h3><p>SSL certificate included. Hosted on infrastructure that doesn't go down.</p></div>
+    <div class="feature"><div class="feature-icon">🛠️</div><h3>You Own Everything</h3><p>Full access to your domain, hosting and files. No lock-in, no ongoing dependency.</p></div>
+  </div>
+</section>
+
+<section class="portfolio" id="work">
+  <div class="section-eyebrow">Recent Work</div>
+  <div class="section-title">A few things<br>we've <em>built.</em></div>
+  <div class="portfolio-grid">
+    <div class="portfolio-card">
+      <div class="screenshot-slider">
+        <img class="slide-1" src="img-plumber-hero.png" alt="Trades website">
+        <img class="slide-2" src="img-plumber-reviews.png" alt="Trades website reviews">
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-tag">Trades & Services</div>
+        <h3>Local Plumbing Business</h3>
+        <p>Bold industrial design with emergency banner, services grid, reviews and quote form.</p>
+        <div class="portfolio-tags"><span class="ptag">5 Pages</span><span class="ptag">Mobile Ready</span><span class="ptag">SEO</span><span class="ptag">Quote Form</span></div>
+      </div>
+    </div>
+    <div class="portfolio-card">
+      <div class="screenshot-slider">
+        <img class="slide-1" src="img-cafe-about.png" alt="Cafe website">
+        <img class="slide-2" src="img-cafe-menu.png" alt="Cafe menu">
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-tag">Café & Hospitality</div>
+        <h3>Local Café</h3>
+        <p>Warm editorial design with seasonal menu, opening hours and location details.</p>
+        <div class="portfolio-tags"><span class="ptag">5 Pages</span><span class="ptag">Menu</span><span class="ptag">Google Maps</span><span class="ptag">Reservations</span></div>
+      </div>
+    </div>
+    <div class="portfolio-card">
+      <div class="screenshot-slider">
+        <img class="slide-1" src="img-barber-hero.png" alt="Barbershop website">
+        <img class="slide-2" src="img-barber-services.png" alt="Barbershop services">
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-tag">Retail & Personal Services</div>
+        <h3>Local Barbershop</h3>
+        <p>Luxury minimal design with pricing table, team bios and online booking form.</p>
+        <div class="portfolio-tags"><span class="ptag">5 Pages</span><span class="ptag">Booking Form</span><span class="ptag">Pricing Table</span><span class="ptag">Team Bios</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="section-eyebrow">Transparent Pricing</div>
+  <div class="section-title">Simple. Flat.<br><em>No surprises.</em></div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Starter</div>
+      <div class="price-desc">Perfect for new businesses needing a clean, fast online presence.</div>
+      <div class="price-amount">$599<span> AUD</span></div>
+      <div class="price-note">One-time payment</div>
+      <ul class="price-features">
+        <li>3-page website</li><li>Mobile responsive</li><li>Contact form</li><li>Google Maps embed</li><li>SSL certificate</li><li>Delivered in 5 days</li>
+      </ul>
+      <a href="#contact" class="btn btn-outline" style="width:100%;text-align:center;display:block;">Get Started</a>
+    </div>
+    <div class="price-card featured">
+      <div class="featured-badge">Most Popular</div>
+      <div class="price-name">Standard</div>
+      <div class="price-desc">Everything a local business needs to look professional and convert.</div>
+      <div class="price-amount">$799<span> AUD</span></div>
+      <div class="price-note">One-time payment</div>
+      <ul class="price-features">
+        <li>5-page website</li><li>Mobile responsive</li><li>Contact + quote form</li><li>Google Maps & reviews</li><li>Basic SEO setup</li><li>SSL certificate</li><li>1 round of revisions</li><li>Delivered in 5 days</li>
+      </ul>
+      <a href="#contact" class="btn btn-dark" style="width:100%;text-align:center;display:block;background:var(--sage);">Get Started</a>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Monthly Care</div>
+      <div class="price-desc">Ongoing updates and maintenance — we handle it so you don't have to.</div>
+      <div class="price-amount">$50<span>/mo</span></div>
+      <div class="price-note">Add to any package</div>
+      <ul class="price-features">
+        <li>Content updates on request</li><li>Security & plugin updates</li><li>Monthly backup</li><li>Priority support</li><li>Cancel anytime</li>
+      </ul>
+      <a href="#contact" class="btn btn-outline" style="width:100%;text-align:center;display:block;">Add On</a>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="section-eyebrow">How It Works</div>
+  <div class="section-title">From quote to <em>live in 5 days.</em></div>
+  <div class="process-grid">
+    <div class="process-step"><div class="step-num">01</div><h3>You Get in Touch</h3><p>Fill out the form or email us. Tell us about your business — we'll respond same day.</p></div>
+    <div class="process-step"><div class="step-num">02</div><h3>We Send a Quote</h3><p>Flat price, no hidden extras. Pay a 50% deposit and we get started immediately.</p></div>
+    <div class="process-step"><div class="step-num">03</div><h3>We Build It</h3><p>Send us your logo, photos and copy. We handle design, build and setup.</p></div>
+    <div class="process-step"><div class="step-num">04</div><h3>You Go Live</h3><p>Review, approve, go live. Full ownership of everything — domain, hosting, files.</p></div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="section-eyebrow">Get In Touch</div>
+  <div class="section-title">Get a free quote <em>today.</em></div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>We respond within a few hours.</h3>
+      <p>Tell us about your business and what you need. No obligation, no sales pitch — just a straight answer and a fair price.</p>
+      <div class="contact-detail"><div><div class="detail-label">Email</div><div class="detail-val">valleyviewstudio@outlook.com</div></div></div>
+      <div class="contact-detail"><div><div class="detail-label">Response Time</div><div class="detail-val">Within a few hours</div></div></div>
+      <div class="contact-detail"><div><div class="detail-label">Serving</div><div class="detail-val">Australian Businesses -City + Rural</div></div></div>
+    </div>
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="fgroup"><label>Your Name</label><input type="text" placeholder="Jane Smith"></div>
+        <div class="fgroup"><label>Business Name</label><input type="text" placeholder="Your Business"></div>
+      </div>
+      <div class="fgroup"><label>Email</label><input type="email" placeholder="jane@yourbusiness.com.au"></div>
+      <div class="fgroup"><label>Package</label>
+        <select><option value="">Select a package...</option><option>Starter — $599</option><option>Standard — $799</option><option>Not sure yet</option></select>
+      </div>
+      <div class="fgroup"><label>Tell Us About Your Business</label><textarea placeholder="What do you do? Do you have a logo or photos? Any websites you like the look of?"></textarea></div>
+      <button class="btn btn-dark" style="width:100%;text-align:center;background:var(--sage);border:none;cursor:pointer;font-size:14px;padding:16px;">Send Enquiry →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">ValleyView <span>Studio</span></div>
+  <p>Professional websites for Australian businesses · Fast, honest, affordable.</p>
+  <p style="font-size:11px;">© 2026 ValleyView Studio. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
